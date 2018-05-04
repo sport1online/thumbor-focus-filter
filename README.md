@@ -1,4 +1,5 @@
-Thumbor Focus Filter
+Thumbor Focus Filter 
+[![Build Status](https://travis-ci.org/sport1online/thumbor-focus-filter.svg?branch=master)](https://travis-ci.org/sport1online/thumbor-focus-filter)
 ===
 
 This plugins provide a way to generate text via Thumbor Filter.
