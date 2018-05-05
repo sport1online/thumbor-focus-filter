@@ -13,7 +13,7 @@ By adding `FILTERS` in `thumbor.conf` with `thumbor-focus-filter`, for example:
 ```
 FILTERS =     [
     # other filters....
-    'thumbor-focus-filter',
+    'thumbor_focus_filter',
 ]
 ```
 
