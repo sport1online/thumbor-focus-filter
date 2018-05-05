@@ -26,7 +26,7 @@ Focus filter for thumbor.
     keywords='thumbor filter',
     author='sport1.de',
     author_email='paolo.garri@sport1.de',
-    url='',
+    url='https://github.com/sport1online/thumbor-focus-filter',
     license='MIT',
     classifiers=[
         'Development Status :: 4 - Beta',

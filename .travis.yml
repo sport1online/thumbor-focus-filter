@@ -1,30 +1,16 @@
 language: python
-python:
-  - "2.7"
-
+cache: pip
+python: 2.7
 install:
-    #removing unwanted packages
-    - sudo apt-get remove --purge -y $(< unwanted_packages)
-    # update aptitude
-    - sudo apt-get update -y
-    - sudo apt-get install aptitude -y
-
-    # install aptitude packages
-    - LDFLAGS=-lm sudo aptitude install -y $(< requirements)
-
-    - sudo apt-get autoremove -y
-
-    - df -h
-
-    # weird travis-ci python paths
-    - export PYTHONPATH=$PYTHONPATH:/usr/lib/pymodules/python2.7/
-    - export PYTHONPATH=$PYTHONPATH:/usr/lib/python2.7/dist-packages
-    - export PYTHONPATH=$PYTHONPATH:/usr/lib/pyshared/python2.7/
-    - export PYTHONPATH=$PYTHONPATH:/usr/local/lib/python2.7/site-packages/
-
-    # verify both requirements were met
-    - INSTALLDIR=$(python -c "import os; import numpy; print(os.path.dirname(numpy.__file__))")
-
-    # Fix distribute
-    - curl -O http://python-distribute.org/distribute_setup.py
-    - python distribute_setup.py
+- pip install -q -r requirements .
+notifications:
+  email: false
+deploy:
+  provider: pypi
+  user: paolo.garri
+  password:
+    secure: Gfi/u4wXaPSku4P1ZrojQEO2yFM+LSOAD6v6HFejgCbARO3fH2qfkXV5hEJNaRN5n+LOP7YW6Q5MToSSioAr3OwAZ/aP53HVlZCloB+y4Agd2prV2puuicVJUtKdUYEMsBxCL+TF8siiC+epofEahlsLf+ouTqQIfopzIfD3Gq/XxRuGBmOnplP9+JX3XC4UpnIqTMsus22dpBBJk5E+hBysPttvJXIIJlqqB/Vul9U80mhUJ5HCKtVOf3rT8ntMSJEC6NYzQ+iRc9mma8mzBn8RDfpZgj95D5h9JFUn/bNWCT4CbFnocBQfs6N5W1nQ95V4XyZmRZw6AIsaHPpflB/MscYNRD1g3c+RXtskKmNPeueoh8b9JVXBSHJKDI8sdbX3HT8d5ccHdLOHxTgKMH/ig2XqXLIXyAJfTFSNZbRw/MpBfEhFIn/4F+bkeixMs9hTILdYWWn2HHHGD8sbRBNfClrSIIUlsWa+I1k6qgJdzsee1XQ0YKShOfUc2ZM2Ulqm9Mg3+CL/7zELqLOa11iSyEYtVTKkmul2WM/VYVyfo1B1+7GBvg6QGfANePPhnllSQfdR/yB5LAYCP1/nMcRn7Ompg6b4+Kw2mL+R91UvIYtgBzOIhOshSFraGUTd17RUqBn8RlHglOEqeg9Zj5bq6YHFQ5JdPQ4VacrAEkk=
+  on:
+    tags: true
+    distributions: sdist bdist_wheel
+    repo: sport1online/thumbor-focus-filter
