@@ -15,17 +15,29 @@ class Filter(BaseFilter):
     )
     def focus(self, percentage_width, percentage_height):
         # change to percentage
-        self.percentage_width = float(percentage_width / 100)
-        self.percentage_height = float(percentage_height / 100)
+        percentage_width = float(percentage_width / 100)
+        percentage_height = float(percentage_height / 100)
+        # missing percentage
+        missing_percentage_width = 1.0 - percentage_width
+        missing_percentage_height = 1.0 - percentage_height
         # retrive original image
-        source_image = self.engine.image
         source_width, source_height = self.context.request.engine.size
-       
-        left = int(self.percentage_width * source_width)
-        top = int(self.percentage_height * source_height)
-        width = int(source_width)
-        height = int(source_height)
+        logging.warn('source focus %r %r', source_width, source_height)
+        # retrieve target image
+        target_width = self.context.request.width
+        target_height = self.context.request.height
+        logging.warn('target focus %r %r', target_width, target_height)
         
+        top = (percentage_width * source_width) - ((missing_percentage_width * source_width) / 2)
+        left = (percentage_height * source_height) - ((missing_percentage_height * source_height) / 2)
+        bottom = (percentage_width * source_width) + ((missing_percentage_width * source_width) / 2)
+        right = (percentage_height * source_height) + ((missing_percentage_height * source_height) / 2)
+        
+        width = right - left
+        height = bottom - top
+        box = (top, left, width, height)
+
+        left, top, width, height = box
         self.context.request.focal_points.append(
-            FocalPoint.from_square(left, top, width, height, origin="Explicit")
+            FocalPoint.from_square(int(left), int(top), int(height), int(width), origin="Explicit")
         )
