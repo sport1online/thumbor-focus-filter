@@ -22,11 +22,11 @@ class Filter(BaseFilter):
         missing_percentage_height = 1.0 - percentage_height
         # retrive original image
         source_width, source_height = self.context.request.engine.size
-        logging.warn('source focus %r %r', source_width, source_height)
+        #logging.warn('source focus %r %r', source_width, source_height)
         # retrieve target image
         target_width = self.context.request.width
         target_height = self.context.request.height
-        logging.warn('target focus %r %r', target_width, target_height)
+        #logging.warn('target focus %r %r', target_width, target_height)
         
         top = (percentage_width * source_width) - ((missing_percentage_width * source_width) / 2)
         left = (percentage_height * source_height) - ((missing_percentage_height * source_height) / 2)
